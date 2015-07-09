@@ -5,14 +5,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        findViewById(R.id.button).setOnClickListener(this);
+        findViewById(R.id.button2).setOnClickListener(this);
+        findViewById(R.id.button3).setOnClickListener(this);
+        findViewById(R.id.button4).setOnClickListener(this);
+        findViewById(R.id.button5).setOnClickListener(this);
+        findViewById(R.id.button6).setOnClickListener(this);
     }
 
     @Override
@@ -37,7 +45,17 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendMessage(View view){
-        Toast.makeText(this,"This button will launch my capstone app!", Toast.LENGTH_SHORT).show();
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button6:
+                Toast.makeText(this,"This button will launch my capstone app!", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                if (v instanceof Button){
+                    Toast.makeText(this, ((Button) v).getText() + " click", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 }
