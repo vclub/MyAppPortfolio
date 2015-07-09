@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -20,37 +20,37 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnSpotifyStreamer"
             style="@style/MyButtonStyle"
             android:layout_height="wrap_content"
             android:text="@string/media_streamer" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnScoresApp"
             style="@style/MyButtonStyle"
             android:layout_height="wrap_content"
             android:text="@string/super_duo1" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btnLibraryApp"
             style="@style/MyButtonStyle"
             android:layout_height="wrap_content"
             android:text="@string/super_duo2" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btnBuildItBigger"
             style="@style/MyButtonStyle"
             android:layout_height="wrap_content"
             android:text="@string/ant_terminator" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/btnBaconReader"
             style="@style/MyButtonStyle"
             android:layout_height="wrap_content"
             android:text="@string/materialize" />
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/btnCapstone"
             style="@style/MyButtonStyle"
             android:layout_height="wrap_content"
             android:background="@color/btn_capstone"

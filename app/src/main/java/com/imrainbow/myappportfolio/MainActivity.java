@@ -15,40 +15,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.button).setOnClickListener(this);
-        findViewById(R.id.button2).setOnClickListener(this);
-        findViewById(R.id.button3).setOnClickListener(this);
-        findViewById(R.id.button4).setOnClickListener(this);
-        findViewById(R.id.button5).setOnClickListener(this);
-        findViewById(R.id.button6).setOnClickListener(this);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        findViewById(R.id.btnSpotifyStreamer).setOnClickListener(this);
+        findViewById(R.id.btnScoresApp).setOnClickListener(this);
+        findViewById(R.id.btnLibraryApp).setOnClickListener(this);
+        findViewById(R.id.btnBuildItBigger).setOnClickListener(this);
+        findViewById(R.id.btnBaconReader).setOnClickListener(this);
+        findViewById(R.id.btnCapstone).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.button6:
+            case R.id.btnCapstone:
                 Toast.makeText(this,"This button will launch my capstone app!", Toast.LENGTH_SHORT).show();
                 break;
             default:
