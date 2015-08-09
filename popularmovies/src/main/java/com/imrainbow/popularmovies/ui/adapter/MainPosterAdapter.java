@@ -1,15 +1,20 @@
 package com.imrainbow.popularmovies.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.imrainbow.popularmovies.R;
 import com.imrainbow.popularmovies.model.MovieEntity;
+import com.imrainbow.popularmovies.ui.MovieDetailActivity;
 import com.imrainbow.popularmovies.ui.base.BaseRecyclerAdapter;
 
 import butterknife.Bind;
@@ -35,15 +40,22 @@ public class MainPosterAdapter extends BaseRecyclerAdapter<MovieEntity> {
 
         MainPosterViewHolder holder = (MainPosterViewHolder) viewHolder;
 
-        MovieEntity info = mItems.get(position);
+        final MovieEntity info = mItems.get(position);
 
-
-        info.getPoster_path();
+        Log.e("image", "http://image.tmdb.org/t/p/w185" + info.getPoster_path());
         Glide.with(mContext)
                 .load("http://image.tmdb.org/t/p/w185" + info.getPoster_path())
                 .placeholder(R.mipmap.ic_launcher)
                 .crossFade()
                 .into(holder.moviePoster);
+
+        holder.moviePoster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.startActivity(new Intent(mContext, MovieDetailActivity.class)
+                        .putExtra("movie", info));
+            }
+        });
     }
 
     public class MainPosterViewHolder extends RecyclerView.ViewHolder {
@@ -54,6 +66,10 @@ public class MainPosterAdapter extends BaseRecyclerAdapter<MovieEntity> {
         public MainPosterViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            Display display = ((WindowManager) mContext
+                    .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+
+            moviePoster.getLayoutParams().height = display.getWidth() / 2 * 278 / 185;
         }
     }
 

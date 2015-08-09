@@ -1,11 +1,15 @@
 package com.imrainbow.popularmovies.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by vclub on 15/7/25.
  */
-public class MovieEntity {
+public class MovieEntity implements Parcelable {
     /**
      * backdrop_path : /dkMD5qlogeRMiEixC4YNPUvax2T.jpg
      * vote_average : 7
@@ -148,4 +152,59 @@ public class MovieEntity {
     public double getPopularity() {
         return popularity;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.backdrop_path);
+        dest.writeFloat(this.vote_average);
+        dest.writeByte(adult ? (byte) 1 : (byte) 0);
+        dest.writeLong(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.original_language);
+        dest.writeString(this.overview);
+        dest.writeList(this.genre_ids);
+        dest.writeString(this.original_title);
+        dest.writeString(this.release_date);
+        dest.writeInt(this.vote_count);
+        dest.writeString(this.poster_path);
+        dest.writeByte(video ? (byte) 1 : (byte) 0);
+        dest.writeDouble(this.popularity);
+    }
+
+    public MovieEntity() {
+    }
+
+    protected MovieEntity(Parcel in) {
+        this.backdrop_path = in.readString();
+        this.vote_average = in.readFloat();
+        this.adult = in.readByte() != 0;
+        this.id = in.readLong();
+        this.title = in.readString();
+        this.original_language = in.readString();
+        this.overview = in.readString();
+        this.genre_ids = new ArrayList<Integer>();
+        in.readList(this.genre_ids, List.class.getClassLoader());
+        this.original_title = in.readString();
+        this.release_date = in.readString();
+        this.vote_count = in.readInt();
+        this.poster_path = in.readString();
+        this.video = in.readByte() != 0;
+        this.popularity = in.readDouble();
+    }
+
+    public static final Parcelable.Creator<MovieEntity> CREATOR = new Parcelable.Creator<MovieEntity>() {
+        public MovieEntity createFromParcel(Parcel source) {
+            return new MovieEntity(source);
+        }
+
+        public MovieEntity[] newArray(int size) {
+            return new MovieEntity[size];
+        }
+    };
 }
