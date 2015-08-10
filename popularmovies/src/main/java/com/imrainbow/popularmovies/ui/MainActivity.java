@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.imrainbow.popularmovies.Config;
 import com.imrainbow.popularmovies.R;
@@ -26,6 +28,9 @@ public class MainActivity extends BaseActivity {
 
     @Bind(R.id.rv_poster)
     RecyclerView rvPoster;
+
+    @Bind(R.id.pb_loading)
+    ProgressBar pbLoading;
 
     private MainPosterAdapter mAdapter;
 
@@ -66,11 +71,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void loadMoiveData() {
+        pbLoading.setVisibility(View.VISIBLE);
         MovieAPI movieAPI = RestAdapterUtils.getRestAPI(MovieAPI.class);
         movieAPI.getMoviesSortBy(spfHelper.getValue(Config.SORT_VALUE_KEY), Config.THE_MOVIE_DB_API_KEY, new Callback<MovieInfo>() {
             @Override
             public void success(MovieInfo movieInfo, Response response) {
-                Log.e("test", response.getUrl());
+                pbLoading.setVisibility(View.GONE);
                 if (movieInfo.getResults().size() > 0) {
                     currentMovieInfo = movieInfo;
                     mAdapter.setItems(movieInfo.getResults());
@@ -79,6 +85,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void failure(RetrofitError error) {
+                pbLoading.setVisibility(View.GONE);
                 Log.e("test", "error", error);
             }
         });
