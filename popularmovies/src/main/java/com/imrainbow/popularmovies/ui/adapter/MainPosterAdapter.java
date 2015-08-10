@@ -42,7 +42,6 @@ public class MainPosterAdapter extends BaseRecyclerAdapter<MovieEntity> {
 
         final MovieEntity info = mItems.get(position);
 
-        Log.e("image", "http://image.tmdb.org/t/p/w185" + info.getPoster_path());
         Glide.with(mContext)
                 .load("http://image.tmdb.org/t/p/w185" + info.getPoster_path())
                 .placeholder(R.mipmap.ic_launcher)

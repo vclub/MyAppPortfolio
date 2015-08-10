@@ -1,11 +1,14 @@
 package com.imrainbow.popularmovies.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
  * Created by vclub on 15/7/24.
  */
-public class MovieInfo {
+public class MovieInfo implements Parcelable {
 
     private List<MovieEntity> results;
     private int page;
@@ -44,4 +47,37 @@ public class MovieInfo {
         return total_results;
     }
 
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(results);
+        dest.writeInt(this.page);
+        dest.writeInt(this.total_pages);
+        dest.writeInt(this.total_results);
+    }
+
+    public MovieInfo() {
+    }
+
+    protected MovieInfo(Parcel in) {
+        this.results = in.createTypedArrayList(MovieEntity.CREATOR);
+        this.page = in.readInt();
+        this.total_pages = in.readInt();
+        this.total_results = in.readInt();
+    }
+
+    public static final Parcelable.Creator<MovieInfo> CREATOR = new Parcelable.Creator<MovieInfo>() {
+        public MovieInfo createFromParcel(Parcel source) {
+            return new MovieInfo(source);
+        }
+
+        public MovieInfo[] newArray(int size) {
+            return new MovieInfo[size];
+        }
+    };
 }

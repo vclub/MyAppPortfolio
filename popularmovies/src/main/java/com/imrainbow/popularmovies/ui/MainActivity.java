@@ -3,6 +3,7 @@ package com.imrainbow.popularmovies.ui;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import com.imrainbow.popularmovies.model.MovieInfo;
 import com.imrainbow.popularmovies.ui.adapter.MainPosterAdapter;
 import com.imrainbow.popularmovies.ui.base.BaseActivity;
 import com.imrainbow.popularmovies.util.RestAdapterUtils;
+import com.imrainbow.popularmovies.util.SharedPreferenceHelper;
 
 import butterknife.Bind;
 import retrofit.Callback;
@@ -25,34 +27,52 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.rv_poster)
     RecyclerView rvPoster;
 
-    private String currentSortBy = Config.SORT_BY_MOST_POPULAR;
-    MainPosterAdapter mAdapter;
+    private MainPosterAdapter mAdapter;
+
+    private SharedPreferenceHelper spfHelper;
+    private MovieInfo currentMovieInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        spfHelper = SharedPreferenceHelper.getInstance(this);
+        if (TextUtils.isEmpty(spfHelper.getValue(Config.SORT_VALUE_KEY))) {
+            spfHelper.setValue(Config.SORT_VALUE_KEY, Config.SORT_BY_MOST_POPULAR);
+        }
+
         setupView();
 
-        loadMoiveData();
+        if (savedInstanceState == null) {
+            loadMoiveData();
+        } else {
+            currentMovieInfo = savedInstanceState.getParcelable("movie_info");
+            if (currentMovieInfo != null)
+                mAdapter.setItems(currentMovieInfo.getResults());
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("movie_info", currentMovieInfo);
+        super.onSaveInstanceState(outState);
     }
 
     private void setupView() {
         rvPoster.setLayoutManager(new GridLayoutManager(this, 2));
-        if (mAdapter == null){
-            mAdapter = new MainPosterAdapter(this);
-        }
+        mAdapter = new MainPosterAdapter(this);
         rvPoster.setAdapter(mAdapter);
     }
 
-    private void loadMoiveData(){
+    private void loadMoiveData() {
         MovieAPI movieAPI = RestAdapterUtils.getRestAPI(MovieAPI.class);
-
-        movieAPI.getMoviesSortBy(currentSortBy, Config.THE_MOVIE_DB_API_KEY, new Callback<MovieInfo>() {
+        movieAPI.getMoviesSortBy(spfHelper.getValue(Config.SORT_VALUE_KEY), Config.THE_MOVIE_DB_API_KEY, new Callback<MovieInfo>() {
             @Override
             public void success(MovieInfo movieInfo, Response response) {
+                Log.e("test", response.getUrl());
                 if (movieInfo.getResults().size() > 0) {
+                    currentMovieInfo = movieInfo;
                     mAdapter.setItems(movieInfo.getResults());
                 }
             }
@@ -80,12 +100,12 @@ public class MainActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_highest_rated) {
-            currentSortBy = Config.SORT_BY_HIGHEST_RATED;
+            spfHelper.setValue(Config.SORT_VALUE_KEY, Config.SORT_BY_HIGHEST_RATED);
             loadMoiveData();
             return true;
         }
         if (id == R.id.action_most_popular) {
-            currentSortBy = Config.SORT_BY_MOST_POPULAR;
+            spfHelper.setValue(Config.SORT_VALUE_KEY, Config.SORT_BY_MOST_POPULAR);
             loadMoiveData();
             return true;
         }
