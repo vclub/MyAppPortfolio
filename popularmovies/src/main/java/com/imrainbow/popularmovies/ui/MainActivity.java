@@ -71,8 +71,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void loadMoiveData() {
+
         pbLoading.setVisibility(View.VISIBLE);
-        MovieAPI movieAPI = RestAdapterUtils.getRestAPI(MovieAPI.class);
+        MovieAPI movieAPI = RestAdapterUtils.getRestAPI(MovieAPI.class, this);
         movieAPI.getMoviesSortBy(spfHelper.getValue(Config.SORT_VALUE_KEY), Config.THE_MOVIE_DB_API_KEY, new Callback<MovieInfo>() {
             @Override
             public void success(MovieInfo movieInfo, Response response) {
