@@ -20,7 +20,7 @@ public class SharedPreferenceHelper {
 
     public static synchronized SharedPreferenceHelper getInstance(Context context){
         if (null == instance)
-            instance = new SharedPreferenceHelper(context);
+            instance = new SharedPreferenceHelper(context.getApplicationContext());
         return instance;
     }
 
