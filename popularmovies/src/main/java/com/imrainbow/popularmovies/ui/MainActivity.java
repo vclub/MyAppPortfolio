@@ -1,5 +1,6 @@
 package com.imrainbow.popularmovies.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,10 +15,12 @@ import android.widget.ProgressBar;
 
 import com.imrainbow.popularmovies.Config;
 import com.imrainbow.popularmovies.R;
+import com.imrainbow.popularmovies.model.MovieEntity;
 import com.imrainbow.popularmovies.model.MovieInfo;
 import com.imrainbow.popularmovies.network.TheMovieDBApi;
 import com.imrainbow.popularmovies.ui.adapter.MainPosterAdapter;
 import com.imrainbow.popularmovies.ui.base.BaseActivity;
+import com.imrainbow.popularmovies.ui.fragment.MovieDetailFragment;
 import com.imrainbow.popularmovies.util.SharedPreferenceHelper;
 
 import butterknife.Bind;
@@ -25,7 +28,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements MainPosterAdapter.OnItemClick {
 
     @Bind(R.id.rv_poster)
     RecyclerView rvPoster;
@@ -43,6 +46,8 @@ public class MainActivity extends BaseActivity {
     private SharedPreferenceHelper spfHelper;
     private MovieInfo currentMovieInfo;
 
+    private MovieDetailFragment detailFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +64,12 @@ public class MainActivity extends BaseActivity {
             loadMoiveData();
         } else {
             currentMovieInfo = savedInstanceState.getParcelable(Config.MOVIE_INFO_KEY);
-            if (currentMovieInfo != null)
+            if (currentMovieInfo != null) {
                 mAdapter.setItems(currentMovieInfo.getResults());
+            }
         }
 
-        if (flMovieDetail != null){
+        if (flMovieDetail != null) {
             Log.e("test", "this is table layout");
         } else {
             Log.e("test", "this is not table layout");
@@ -77,13 +83,13 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setupView() {
-
         if (flMovieDetail != null){
-            default_spancount = 3;
+            detailFragment = new MovieDetailFragment();
+            getFragmentManager().beginTransaction().replace(R.id.fl_movie_detail, detailFragment).commit();
         }
-
-        rvPoster.setLayoutManager(new GridLayoutManager(this, default_spancount));
+        rvPoster.setLayoutManager(new GridLayoutManager(this, flMovieDetail != null ? 3 : default_spancount));
         mAdapter = new MainPosterAdapter(this);
+        mAdapter.setOnItemClick(this);
         rvPoster.setAdapter(mAdapter);
     }
 
@@ -137,7 +143,7 @@ public class MainActivity extends BaseActivity {
             loadMoiveData();
             return true;
         }
-        if (id == R.id.action_my_favorite){
+        if (id == R.id.action_my_favorite) {
             loadMyFavorite();
             return true;
         }
@@ -145,7 +151,18 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void loadMyFavorite(){
+    private void loadMyFavorite() {
         // mAdapter.setItems(GreenDaoHelper.getInstance(this).getFavoriteDao().loadAll());
+    }
+
+
+    @Override
+    public void onItemClick(MovieEntity movie) {
+        if (flMovieDetail != null){
+            detailFragment.showMovie(movie);
+        }else {
+            startActivity(new Intent(this, MovieDetailActivity.class)
+                    .putExtra("movie", movie));
+        }
     }
 }

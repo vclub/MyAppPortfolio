@@ -1,10 +1,10 @@
 package com.imrainbow.popularmovies.ui;
 
+import android.net.Uri;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.imrainbow.popularmovies.R;
 import com.imrainbow.popularmovies.model.MovieEntity;
 import com.imrainbow.popularmovies.ui.base.BackBaseActivity;
@@ -19,7 +19,7 @@ public class MovieDetailActivity extends BackBaseActivity {
     @Bind(R.id.tv_movie_title)
     TextView tvMovieTitle;
     @Bind(R.id.iv_movie_poster)
-    ImageView ivMoviePoster;
+    SimpleDraweeView ivMoviePoster;
     @Bind(R.id.tv_release_date)
     TextView tvReleaseDate;
     @Bind(R.id.tv_movie_vote)
@@ -45,11 +45,8 @@ public class MovieDetailActivity extends BackBaseActivity {
         tvReleaseDate.setText(mCurrentMovie.getRelease_date());
         tvMovieVote.setText(mCurrentMovie.getVote_average() + "/10");
         tvPlotSynopsis.setText(mCurrentMovie.getOverview());
+        ivMoviePoster.setImageURI(Uri.parse("http://image.tmdb.org/t/p/w185" + mCurrentMovie.getPoster_path()));
 
-        Glide.with(this)
-                .load("http://image.tmdb.org/t/p/w185" + mCurrentMovie.getPoster_path())
-                .crossFade()
-                .into(ivMoviePoster);
 
     }
 }

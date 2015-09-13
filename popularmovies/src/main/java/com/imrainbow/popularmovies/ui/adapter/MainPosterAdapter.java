@@ -1,19 +1,15 @@
 package com.imrainbow.popularmovies.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.imrainbow.popularmovies.R;
 import com.imrainbow.popularmovies.model.MovieEntity;
-import com.imrainbow.popularmovies.ui.MovieDetailActivity;
 import com.imrainbow.popularmovies.ui.base.BaseRecyclerAdapter;
 
 import butterknife.Bind;
@@ -41,17 +37,13 @@ public class MainPosterAdapter extends BaseRecyclerAdapter<MovieEntity> {
 
         final MovieEntity info = mItems.get(position);
 
-        Glide.with(mContext)
-                .load("http://image.tmdb.org/t/p/w185" + info.getPoster_path())
-                .placeholder(R.mipmap.ic_launcher)
-                .crossFade()
-                .into(holder.moviePoster);
-
+//        holder.moviePoster.setAspectRatio(278 / 185);
+        holder.moviePoster.setImageURI(Uri.parse("http://image.tmdb.org/t/p/w185" + info.getPoster_path()));
         holder.moviePoster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext, MovieDetailActivity.class)
-                        .putExtra("movie", info));
+                if (onItemClick != null)
+                    onItemClick.onItemClick(info);
             }
         });
     }
@@ -59,17 +51,22 @@ public class MainPosterAdapter extends BaseRecyclerAdapter<MovieEntity> {
     public class MainPosterViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.iv_movie_poster)
-        ImageView moviePoster;
+        SimpleDraweeView moviePoster;
 
         public MainPosterViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            Display display = ((WindowManager) mContext
-                    .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-
-//            moviePoster.getLayoutParams().height = moviePoster.getLayoutParams().width * 185 / 278;
-            moviePoster.getLayoutParams().height = display.getWidth() / 3 * 278 / 185;
         }
+    }
+
+    private OnItemClick onItemClick;
+
+    public void setOnItemClick(OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
+    }
+
+    public interface OnItemClick{
+        void onItemClick(MovieEntity movie);
     }
 
 }

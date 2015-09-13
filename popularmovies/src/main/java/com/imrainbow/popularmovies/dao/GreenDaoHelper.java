@@ -20,7 +20,7 @@ public class GreenDaoHelper {
     }
 
     public GreenDaoHelper(Context context) {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "", null);
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, DATABASE_FILE_NAME, null);
         SQLiteDatabase db = helper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
