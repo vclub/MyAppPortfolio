@@ -1,1 +1,1 @@
-include ':app','popularmovies'
+include ':app',':popularmovies',':MyDaoGenerator'
