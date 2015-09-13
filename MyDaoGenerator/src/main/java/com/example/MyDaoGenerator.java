@@ -14,13 +14,12 @@ public class MyDaoGenerator {
 
     private static void addFavorite(Schema schema){
         Entity subscriptionItem = schema.addEntity("Favorite");
-        subscriptionItem.addStringProperty("uid").primaryKey();
-        subscriptionItem.addStringProperty("uname");
-        subscriptionItem.addStringProperty("nickname");
-        subscriptionItem.addStringProperty("mobile");
-        subscriptionItem.addStringProperty("gender");
-        subscriptionItem.addStringProperty("location");
-        subscriptionItem.addStringProperty("avatar");
+        subscriptionItem.addLongProperty("id").primaryKey();
+        subscriptionItem.addStringProperty("title");
+        subscriptionItem.addStringProperty("release_date");
+        subscriptionItem.addFloatProperty("vote_average");
+        subscriptionItem.addStringProperty("overview");
+        subscriptionItem.addStringProperty("poster_path");
     }
 
 }

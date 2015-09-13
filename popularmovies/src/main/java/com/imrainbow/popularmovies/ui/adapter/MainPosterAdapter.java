@@ -3,7 +3,6 @@ package com.imrainbow.popularmovies.ui.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +67,8 @@ public class MainPosterAdapter extends BaseRecyclerAdapter<MovieEntity> {
             Display display = ((WindowManager) mContext
                     .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 
-            moviePoster.getLayoutParams().height = display.getWidth() / 2 * 278 / 185;
+//            moviePoster.getLayoutParams().height = moviePoster.getLayoutParams().width * 185 / 278;
+            moviePoster.getLayoutParams().height = display.getWidth() / 3 * 278 / 185;
         }
     }
 

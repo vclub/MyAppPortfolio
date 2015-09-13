@@ -1,6 +1,7 @@
 package com.imrainbow.popularmovies.ui;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.imrainbow.popularmovies.Config;
@@ -31,6 +33,11 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.pb_loading)
     ProgressBar pbLoading;
 
+    @Nullable
+    @Bind(R.id.fl_movie_detail)
+    FrameLayout flMovieDetail;
+
+    private int default_spancount = 2;
     private MainPosterAdapter mAdapter;
 
     private SharedPreferenceHelper spfHelper;
@@ -55,6 +62,12 @@ public class MainActivity extends BaseActivity {
             if (currentMovieInfo != null)
                 mAdapter.setItems(currentMovieInfo.getResults());
         }
+
+        if (flMovieDetail != null){
+            Log.e("test", "this is table layout");
+        } else {
+            Log.e("test", "this is not table layout");
+        }
     }
 
     @Override
@@ -64,7 +77,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setupView() {
-        rvPoster.setLayoutManager(new GridLayoutManager(this, 2));
+
+        if (flMovieDetail != null){
+            default_spancount = 3;
+        }
+
+        rvPoster.setLayoutManager(new GridLayoutManager(this, default_spancount));
         mAdapter = new MainPosterAdapter(this);
         rvPoster.setAdapter(mAdapter);
     }
@@ -119,7 +137,15 @@ public class MainActivity extends BaseActivity {
             loadMoiveData();
             return true;
         }
+        if (id == R.id.action_my_favorite){
+            loadMyFavorite();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void loadMyFavorite(){
+        // mAdapter.setItems(GreenDaoHelper.getInstance(this).getFavoriteDao().loadAll());
     }
 }

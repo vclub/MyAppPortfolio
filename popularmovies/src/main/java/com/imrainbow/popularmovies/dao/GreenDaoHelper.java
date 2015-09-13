@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
  * Created by Bin Li on 2015/9/13.
  */
 public class GreenDaoHelper {
+
+    private static final String DATABASE_FILE_NAME = "popular-movies-db";
     private static GreenDaoHelper instance;
-    private SQLiteDatabase db;
-    private DaoMaster daoMaster;
     private DaoSession daoSession;
 
     public static synchronized GreenDaoHelper getInstance(Context context){
@@ -21,8 +21,8 @@ public class GreenDaoHelper {
 
     public GreenDaoHelper(Context context) {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, "", null);
-        db = helper.getWritableDatabase();
-        daoMaster = new DaoMaster(db);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
     }
 

@@ -3,7 +3,7 @@ apply plugin: 'java'
 
 mainClassName = "com.example.MyDaoGenerator"
 
-def outputDir = "../app/src/main/java/"
+def outputDir = "../popularmovies/src/main/java/"
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
