@@ -9,6 +9,7 @@ public class Config {
     public static String THE_MOVIE_DB_BASE_URL = "http://api.themoviedb.org/3";
 
     public static final String SORT_VALUE_KEY = "sort_key";
+    public static final String MOVIE_INFO_KEY = "movie_info";
 
     public static String SORT_BY_MOST_POPULAR = "popularity.desc";
     public static String SORT_BY_HIGHEST_RATED = "vote_average.desc";

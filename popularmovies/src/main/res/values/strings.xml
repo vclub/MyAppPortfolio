@@ -5,4 +5,7 @@
     <string name="action_most_popular">sort by most popular</string>
     <string name="action_highest_rated">sort by highest-rated</string>
     <string name="movie_detail">MovieDetail</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="movie_release_date">2015</string>
+    <string name="movie_vote">8.1/10</string>
 </resources>

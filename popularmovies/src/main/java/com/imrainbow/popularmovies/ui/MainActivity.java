@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity {
         if (savedInstanceState == null) {
             loadMoiveData();
         } else {
-            currentMovieInfo = savedInstanceState.getParcelable("movie_info");
+            currentMovieInfo = savedInstanceState.getParcelable(Config.MOVIE_INFO_KEY);
             if (currentMovieInfo != null)
                 mAdapter.setItems(currentMovieInfo.getResults());
         }
@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable("movie_info", currentMovieInfo);
+        outState.putParcelable(Config.MOVIE_INFO_KEY, currentMovieInfo);
         super.onSaveInstanceState(outState);
     }
 
@@ -70,6 +70,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void loadMoiveData() {
+
         pbLoading.setVisibility(View.VISIBLE);
         TheMovieDBApi.getInstance()
                 .getTheMovieDBService()
