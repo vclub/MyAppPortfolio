@@ -1,5 +1,6 @@
 package com.imrainbow.popularmovies.ui.fragment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.imrainbow.popularmovies.Config;
@@ -123,10 +123,14 @@ public class MovieDetailFragment extends BaseFragment {
                                         null, null, null);
                                 trailer.setGravity(Gravity.CENTER_VERTICAL);
                                 trailer.setText(video.getName());
+                                final String key = video.getKey();
                                 trailer.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Toast.makeText(getActivity(), "test", Toast.LENGTH_SHORT).show();
+                                        Intent view = new Intent();
+                                        view.setAction(Intent.ACTION_VIEW);
+                                        view.setData(Uri.parse("http://www.youtube.com/watch?v=" + key));
+                                        startActivity(view);
                                     }
                                 });
                                 trailerLayout.addView(trailer,
