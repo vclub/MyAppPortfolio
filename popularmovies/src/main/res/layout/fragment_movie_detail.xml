@@ -1,75 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_movie_title"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/text_view_default_padding"
+            tools:text="@string/movie_title" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/text_view_default_padding"
+            android:paddingRight="@dimen/text_view_default_padding">
 
-            <TextView
-                android:id="@+id/tv_movie_title"
-                style="@style/TextAppearance.AppCompat.Headline"
-                android:layout_width="match_parent"
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/iv_movie_poster"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/text_view_default_padding"
-                tools:text="@string/movie_title" />
+                android:layout_weight="1"
+                fresco:viewAspectRatio="0.665" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/text_view_default_padding"
-                android:paddingRight="@dimen/text_view_default_padding">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/iv_movie_poster"
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tv_release_date"
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    fresco:viewAspectRatio="0.665"
-                    android:layout_weight="1"/>
+                    android:text="@string/movie_release_date" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tv_movie_vote"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:text="@string/movie_vote" />
 
-                    <TextView
-                        android:id="@+id/tv_release_date"
-                        style="@style/TextAppearance.AppCompat.Title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/movie_release_date" />
-
-                    <TextView
-                        android:id="@+id/tv_movie_vote"
-                        style="@style/TextAppearance.AppCompat.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/movie_vote" />
-
-                    <Button
-                        android:id="@+id/btn_my_favorite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/btn_my_favorite"/>
-                </LinearLayout>
+                <Button
+                    android:id="@+id/btn_my_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_my_favorite" />
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_plot_synopsis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/text_view_default_padding" />
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_plot_synopsis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/text_view_default_padding" />
+
+        <include layout="@layout/trailers_layout" />
+
+        <include layout="@layout/reviews_layout" />
+    </LinearLayout>
+</ScrollView>

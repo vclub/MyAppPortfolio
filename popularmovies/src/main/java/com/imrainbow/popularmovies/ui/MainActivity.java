@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity implements MainPosterAdapter.OnIt
     private void setupView() {
         if (flMovieDetail != null){
             detailFragment = new MovieDetailFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fl_movie_detail, detailFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fl_movie_detail, detailFragment).commit();
         }
         rvPoster.setLayoutManager(new GridLayoutManager(this, flMovieDetail != null ? 3 : default_spancount));
         mAdapter = new MainPosterAdapter(this);

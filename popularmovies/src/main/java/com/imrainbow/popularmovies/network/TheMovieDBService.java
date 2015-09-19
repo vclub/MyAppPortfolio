@@ -20,12 +20,12 @@ public interface TheMovieDBService {
                           Callback<MovieInfo> callback);
 
     @GET("/movie/{id}/videos")
-    void getMovieTrailers(@Path("id") String movieId,
+    void getMovieTrailers(@Path("id") long movieId,
                           @Query("api_key") String api_key,
                           Callback<VideosResonse> callback);
 
     @GET("/movie/{id}/reviews")
-    void getMovieReviews(@Path("id") String movieId,
+    void getMovieReviews(@Path("id") long movieId,
                           @Query("api_key") String api_key,
                           Callback<ReviewsResponse> callback);
 }
