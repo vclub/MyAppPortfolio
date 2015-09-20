@@ -52,10 +52,11 @@
                     android:layout_height="wrap_content"
                     android:text="@string/movie_vote" />
 
-                <Button
+                <TextView
                     android:id="@+id/btn_my_favorite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/abc_btn_rating_star_off_mtrl_alpha"
                     android:text="@string/btn_my_favorite" />
             </LinearLayout>
         </LinearLayout>

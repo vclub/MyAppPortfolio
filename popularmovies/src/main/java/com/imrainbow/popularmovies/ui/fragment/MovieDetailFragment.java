@@ -52,6 +52,11 @@ public class MovieDetailFragment extends BaseFragment {
     @Bind(R.id.reviews_layout)
     LinearLayout reviewLayout;
 
+    @Bind(R.id.btn_my_favorite)
+    TextView tvFavorite;
+
+    private boolean isInFavorite = false;
+
     private MovieEntity mCurrentMovie;
 
     public static MovieDetailFragment newInstance(MovieEntity movie) {
@@ -101,10 +106,31 @@ public class MovieDetailFragment extends BaseFragment {
         tvPlotSynopsis.setText(movie.getOverview());
         ivMoviePoster.setImageURI(Uri.parse("http://image.tmdb.org/t/p/w185" + movie.getPoster_path()));
 
+        checkFavorite(movie.getId());
+
         mCurrentMovie = movie;
 
         loadVideos(mCurrentMovie.getId());
         loadReviews(mCurrentMovie.getId());
+    }
+
+    private void checkFavorite(long movieId){
+        MovieEntity movie = GreenDaoHelper.getInstance(getActivity()).getMovieEntityDao().load(movieId);
+        if (movie != null){
+            showFavorite(isInFavorite = true);
+        }else {
+            showFavorite(isInFavorite = false);
+        }
+    }
+
+    private void showFavorite(Boolean isFavorite){
+        if (isFavorite){
+            tvFavorite.setCompoundDrawablesWithIntrinsicBounds(null,
+                    getResources().getDrawable(R.drawable.abc_btn_rating_star_on_mtrl_alpha), null, null);
+        }else {
+            tvFavorite.setCompoundDrawablesWithIntrinsicBounds(null,
+                    getResources().getDrawable(R.drawable.abc_btn_rating_star_off_mtrl_alpha), null, null);
+        }
     }
 
     private void loadVideos(long movieId) {
@@ -186,16 +212,23 @@ public class MovieDetailFragment extends BaseFragment {
     @OnClick(R.id.btn_my_favorite)
     void onBtnFavoriteClick() {
         if (mCurrentMovie != null) {
-            MovieEntity favorite = new MovieEntity();
-            favorite.setId(mCurrentMovie.getId());
-            favorite.setTitle(mCurrentMovie.getTitle());
-            favorite.setRelease_date(mCurrentMovie.getRelease_date());
-            favorite.setVote_average(mCurrentMovie.getVote_average());
-            favorite.setPoster_path(mCurrentMovie.getPoster_path());
-            favorite.setOverview(mCurrentMovie.getOverview());
-            GreenDaoHelper.getInstance(getActivity().getApplicationContext())
-                    .getMovieEntityDao()
-                    .insertOrReplace(favorite);
+            if (!isInFavorite){
+                MovieEntity favorite = new MovieEntity();
+                favorite.setId(mCurrentMovie.getId());
+                favorite.setTitle(mCurrentMovie.getTitle());
+                favorite.setRelease_date(mCurrentMovie.getRelease_date());
+                favorite.setVote_average(mCurrentMovie.getVote_average());
+                favorite.setPoster_path(mCurrentMovie.getPoster_path());
+                favorite.setOverview(mCurrentMovie.getOverview());
+                GreenDaoHelper.getInstance(getActivity().getApplicationContext())
+                        .getMovieEntityDao()
+                        .insertOrReplace(favorite);
+
+                showFavorite(isInFavorite = true);
+            } else {
+                GreenDaoHelper.getInstance(getActivity()).getMovieEntityDao().deleteByKey(mCurrentMovie.getId());
+                showFavorite(isInFavorite = false);
+            }
         }
     }
 }
