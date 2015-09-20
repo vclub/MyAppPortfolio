@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.imrainbow.popularmovies.R;
-import com.imrainbow.popularmovies.model.MovieEntity;
+import com.imrainbow.popularmovies.dao.MovieEntity;
 import com.imrainbow.popularmovies.ui.base.BaseRecyclerAdapter;
 
 import butterknife.Bind;
@@ -37,7 +37,6 @@ public class MainPosterAdapter extends BaseRecyclerAdapter<MovieEntity> {
 
         final MovieEntity info = mItems.get(position);
 
-//        holder.moviePoster.setAspectRatio(278 / 185);
         holder.moviePoster.setImageURI(Uri.parse("http://image.tmdb.org/t/p/w185" + info.getPoster_path()));
         holder.moviePoster.setOnClickListener(new View.OnClickListener() {
             @Override

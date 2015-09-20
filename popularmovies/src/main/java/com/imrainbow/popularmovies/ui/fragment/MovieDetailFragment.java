@@ -13,9 +13,8 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.imrainbow.popularmovies.Config;
 import com.imrainbow.popularmovies.R;
-import com.imrainbow.popularmovies.dao.Favorite;
 import com.imrainbow.popularmovies.dao.GreenDaoHelper;
-import com.imrainbow.popularmovies.model.MovieEntity;
+import com.imrainbow.popularmovies.dao.MovieEntity;
 import com.imrainbow.popularmovies.model.ReviewEntity;
 import com.imrainbow.popularmovies.model.ReviewsResponse;
 import com.imrainbow.popularmovies.model.VideoEntity;
@@ -129,7 +128,7 @@ public class MovieDetailFragment extends BaseFragment {
                                     public void onClick(View v) {
                                         Intent view = new Intent();
                                         view.setAction(Intent.ACTION_VIEW);
-                                        view.setData(Uri.parse("http://www.youtube.com/watch?v=" + key));
+                                        view.setData(Uri.parse("https://youtu.be/" + key));
                                         startActivity(view);
                                     }
                                 });
@@ -187,14 +186,16 @@ public class MovieDetailFragment extends BaseFragment {
     @OnClick(R.id.btn_my_favorite)
     void onBtnFavoriteClick() {
         if (mCurrentMovie != null) {
-            Favorite favorite = new Favorite();
+            MovieEntity favorite = new MovieEntity();
             favorite.setId(mCurrentMovie.getId());
             favorite.setTitle(mCurrentMovie.getTitle());
             favorite.setRelease_date(mCurrentMovie.getRelease_date());
             favorite.setVote_average(mCurrentMovie.getVote_average());
             favorite.setPoster_path(mCurrentMovie.getPoster_path());
             favorite.setOverview(mCurrentMovie.getOverview());
-            GreenDaoHelper.getInstance(getActivity().getApplicationContext()).getFavoriteDao().insertOrReplace(favorite);
+            GreenDaoHelper.getInstance(getActivity().getApplicationContext())
+                    .getMovieEntityDao()
+                    .insertOrReplace(favorite);
         }
     }
 }

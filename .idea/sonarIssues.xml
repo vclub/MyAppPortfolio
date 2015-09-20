@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="issues">
+    <option name="index">
+      <map>
+        <entry key="/Dummy.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/MyDaoGenerator/src/main/java/com/example/MyDaoGenerator.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/dao/DaoMaster.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/dao/DaoSession.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/dao/Favorite.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/dao/FavoriteDao.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/dao/GreenDaoHelper.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/dao/MovieEntity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/model/MovieEntity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/model/MovieInfo.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/network/TheMovieDBService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/ui/MainActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/ui/MovieDetailActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/ui/adapter/MainPosterAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/ui/base/BaseFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/ui/fragment/MovieDetailFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/java/com/imrainbow/popularmovies/util/DensityUtils.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/res/layout/activity_movie_detail.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/res/layout/fragment_movie_detail.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/res/layout/reviews_layout.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/res/layout/trailers_layout.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/popularmovies/src/main/res/values/strings.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -3,7 +3,7 @@ package com.imrainbow.popularmovies.ui;
 import android.os.Bundle;
 
 import com.imrainbow.popularmovies.R;
-import com.imrainbow.popularmovies.model.MovieEntity;
+import com.imrainbow.popularmovies.dao.MovieEntity;
 import com.imrainbow.popularmovies.ui.base.BackBaseActivity;
 import com.imrainbow.popularmovies.ui.fragment.MovieDetailFragment;
 

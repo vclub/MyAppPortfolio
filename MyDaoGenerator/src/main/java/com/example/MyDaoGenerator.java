@@ -13,7 +13,8 @@ public class MyDaoGenerator {
     }
 
     private static void addFavorite(Schema schema){
-        Entity subscriptionItem = schema.addEntity("Favorite");
+        Entity subscriptionItem = schema.addEntity("MovieEntity");
+        subscriptionItem.setHasKeepSections(true);
         subscriptionItem.addLongProperty("id").primaryKey();
         subscriptionItem.addStringProperty("title");
         subscriptionItem.addStringProperty("release_date");

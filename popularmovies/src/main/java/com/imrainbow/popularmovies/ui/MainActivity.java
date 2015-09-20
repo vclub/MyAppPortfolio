@@ -15,7 +15,8 @@ import android.widget.ProgressBar;
 
 import com.imrainbow.popularmovies.Config;
 import com.imrainbow.popularmovies.R;
-import com.imrainbow.popularmovies.model.MovieEntity;
+import com.imrainbow.popularmovies.dao.GreenDaoHelper;
+import com.imrainbow.popularmovies.dao.MovieEntity;
 import com.imrainbow.popularmovies.model.MovieInfo;
 import com.imrainbow.popularmovies.network.TheMovieDBApi;
 import com.imrainbow.popularmovies.ui.adapter.MainPosterAdapter;
@@ -152,7 +153,7 @@ public class MainActivity extends BaseActivity implements MainPosterAdapter.OnIt
     }
 
     private void loadMyFavorite() {
-        // mAdapter.setItems(GreenDaoHelper.getInstance(this).getFavoriteDao().loadAll());
+         mAdapter.setItems(GreenDaoHelper.getInstance(this).getMovieEntityDao().loadAll());
     }
 
 

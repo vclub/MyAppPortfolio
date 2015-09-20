@@ -26,7 +26,7 @@ public class GreenDaoHelper {
         daoSession = daoMaster.newSession();
     }
 
-    public FavoriteDao getFavoriteDao() {
-        return daoSession.getFavoriteDao();
+    public MovieEntityDao getMovieEntityDao() {
+        return daoSession.getMovieEntityDao();
     }
 }

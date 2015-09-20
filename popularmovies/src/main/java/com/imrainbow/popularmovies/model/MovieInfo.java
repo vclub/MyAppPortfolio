@@ -3,6 +3,8 @@ package com.imrainbow.popularmovies.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.imrainbow.popularmovies.dao.MovieEntity;
+
 import java.util.List;
 
 /**
