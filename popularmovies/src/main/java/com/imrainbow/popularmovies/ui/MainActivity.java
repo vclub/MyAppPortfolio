@@ -108,6 +108,10 @@ public class MainActivity extends BaseActivity implements MainPosterAdapter.OnIt
                                 if (movieInfo.getResults().size() > 0) {
                                     currentMovieInfo = movieInfo;
                                     mAdapter.setItems(movieInfo.getResults());
+
+                                    if (flMovieDetail != null){
+                                        detailFragment.showMovie(movieInfo.getResults().get(0));
+                                    }
                                 }
                             }
 

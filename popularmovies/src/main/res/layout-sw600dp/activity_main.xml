@@ -9,32 +9,31 @@
         layout="@layout/toolbar_main" />
 
     <LinearLayout
-        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:orientation="horizontal">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_poster"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <FrameLayout
             android:id="@+id/fl_movie_detail"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_red_dark"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
     </LinearLayout>
 
 
     <ProgressBar
         android:id="@+id/pb_loading"
-        android:layout_below="@+id/toolbar"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:layout_centerInParent="true"
         android:visibility="gone"
-        tools:visibility="visible"
-        />
+        tools:visibility="visible" />
 </RelativeLayout>
