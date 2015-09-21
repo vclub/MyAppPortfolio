@@ -69,12 +69,6 @@ public class MainActivity extends BaseActivity implements MainPosterAdapter.OnIt
                 mAdapter.setItems(currentMovieInfo.getResults());
             }
         }
-
-        if (flMovieDetail != null) {
-            Log.e("test", "this is table layout");
-        } else {
-            Log.e("test", "this is not table layout");
-        }
     }
 
     @Override
@@ -84,7 +78,7 @@ public class MainActivity extends BaseActivity implements MainPosterAdapter.OnIt
     }
 
     private void setupView() {
-        if (flMovieDetail != null){
+        if (flMovieDetail != null) {
             detailFragment = new MovieDetailFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.fl_movie_detail, detailFragment).commit();
         }
@@ -109,7 +103,7 @@ public class MainActivity extends BaseActivity implements MainPosterAdapter.OnIt
                                     currentMovieInfo = movieInfo;
                                     mAdapter.setItems(movieInfo.getResults());
 
-                                    if (flMovieDetail != null){
+                                    if (flMovieDetail != null) {
                                         detailFragment.showMovie(movieInfo.getResults().get(0));
                                     }
                                 }
@@ -157,15 +151,14 @@ public class MainActivity extends BaseActivity implements MainPosterAdapter.OnIt
     }
 
     private void loadMyFavorite() {
-         mAdapter.setItems(GreenDaoHelper.getInstance(this).getMovieEntityDao().loadAll());
+        mAdapter.setItems(GreenDaoHelper.getInstance(this).getMovieEntityDao().loadAll());
     }
-
 
     @Override
     public void onItemClick(MovieEntity movie) {
-        if (flMovieDetail != null){
+        if (flMovieDetail != null) {
             detailFragment.showMovie(movie);
-        }else {
+        } else {
             startActivity(new Intent(this, MovieDetailActivity.class)
                     .putExtra("movie", movie));
         }

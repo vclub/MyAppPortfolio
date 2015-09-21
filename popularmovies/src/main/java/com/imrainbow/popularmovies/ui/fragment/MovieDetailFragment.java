@@ -1,5 +1,6 @@
 package com.imrainbow.popularmovies.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -56,11 +57,10 @@ public class MovieDetailFragment extends BaseFragment {
     TextView tvFavorite;
 
     private boolean isInFavorite = false;
-
     private MovieEntity mCurrentMovie;
+    private Context mContext;
 
     public static MovieDetailFragment newInstance(MovieEntity movie) {
-
         Bundle args = new Bundle();
         args.putParcelable("movie", movie);
         MovieDetailFragment fragment = new MovieDetailFragment();
@@ -76,16 +76,14 @@ public class MovieDetailFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        mContext = getActivity();
         if (savedInstanceState == null) {
-
             if (getActivity().getIntent().hasExtra("movie")) {
                 mCurrentMovie = getActivity().getIntent().getParcelableExtra("movie");
                 showMovie(mCurrentMovie);
-
             }
         } else {
-            mCurrentMovie = savedInstanceState.getParcelable("movieis");
+            mCurrentMovie = savedInstanceState.getParcelable("saved_movie");
             if (mCurrentMovie != null) {
                 showMovie(mCurrentMovie);
             }
@@ -94,7 +92,7 @@ public class MovieDetailFragment extends BaseFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable("movieis", mCurrentMovie);
+        outState.putParcelable("saved_movie", mCurrentMovie);
         super.onSaveInstanceState(outState);
     }
 
@@ -114,22 +112,22 @@ public class MovieDetailFragment extends BaseFragment {
         loadReviews(mCurrentMovie.getId());
     }
 
-    private void checkFavorite(long movieId){
-        MovieEntity movie = GreenDaoHelper.getInstance(getActivity()).getMovieEntityDao().load(movieId);
-        if (movie != null){
+    private void checkFavorite(long movieId) {
+        MovieEntity movie = GreenDaoHelper.getInstance(mContext).getMovieEntityDao().load(movieId);
+        if (movie != null) {
             showFavorite(isInFavorite = true);
-        }else {
+        } else {
             showFavorite(isInFavorite = false);
         }
     }
 
-    private void showFavorite(Boolean isFavorite){
-        if (isFavorite){
+    private void showFavorite(Boolean isFavorite) {
+        if (isFavorite) {
             tvFavorite.setCompoundDrawablesWithIntrinsicBounds(null,
-                    getResources().getDrawable(R.drawable.abc_btn_rating_star_on_mtrl_alpha), null, null);
-        }else {
+                    mContext.getResources().getDrawable(R.drawable.abc_btn_rating_star_on_mtrl_alpha), null, null);
+        } else {
             tvFavorite.setCompoundDrawablesWithIntrinsicBounds(null,
-                    getResources().getDrawable(R.drawable.abc_btn_rating_star_off_mtrl_alpha), null, null);
+                    mContext.getResources().getDrawable(R.drawable.abc_btn_rating_star_off_mtrl_alpha), null, null);
         }
     }
 
@@ -139,12 +137,13 @@ public class MovieDetailFragment extends BaseFragment {
                 new Callback<VideosResonse>() {
                     @Override
                     public void success(VideosResonse videosResonse, Response response) {
+
                         if (videosResonse.getResults().size() > 0) {
 
                             for (VideoEntity video : videosResonse.getResults()) {
-                                TextView trailer = new TextView(getActivity());
+                                TextView trailer = new TextView(mContext);
                                 trailer.setCompoundDrawablesWithIntrinsicBounds(
-                                        getResources().getDrawable(android.R.drawable.ic_media_play),
+                                        mContext.getResources().getDrawable(android.R.drawable.ic_media_play),
                                         null, null, null);
                                 trailer.setGravity(Gravity.CENTER_VERTICAL);
                                 trailer.setText(video.getName());
@@ -160,7 +159,7 @@ public class MovieDetailFragment extends BaseFragment {
                                 });
                                 trailerLayout.addView(trailer,
                                         new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                                                DensityUtils.dp2px(getActivity(), 38)));
+                                                DensityUtils.dp2px(mContext, 38)));
                                 Log.e("test", video.toString());
                             }
 
@@ -180,12 +179,13 @@ public class MovieDetailFragment extends BaseFragment {
                 new Callback<ReviewsResponse>() {
                     @Override
                     public void success(ReviewsResponse reviewsResponse, Response response) {
+
                         if (reviewsResponse.getResults().size() > 0) {
                             for (ReviewEntity reviewEntity : reviewsResponse.getResults()) {
-                                TextView reviewAuthor = new TextView(getActivity());
+                                TextView reviewAuthor = new TextView(mContext);
                                 reviewAuthor.setText(reviewEntity.getAuthor());
                                 reviewAuthor.setCompoundDrawablesWithIntrinsicBounds(
-                                        getResources().getDrawable(android.R.drawable.sym_def_app_icon),
+                                        mContext.getResources().getDrawable(android.R.drawable.sym_def_app_icon),
                                         null, null, null);
                                 reviewAuthor.setGravity(Gravity.CENTER_VERTICAL);
                                 reviewLayout.addView(reviewAuthor,
@@ -193,7 +193,7 @@ public class MovieDetailFragment extends BaseFragment {
                                                 ViewGroup.LayoutParams.WRAP_CONTENT));
 
 
-                                TextView review = new TextView(getActivity());
+                                TextView review = new TextView(mContext);
                                 review.setText(reviewEntity.getContent());
                                 reviewLayout.addView(review,
                                         new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -212,7 +212,7 @@ public class MovieDetailFragment extends BaseFragment {
     @OnClick(R.id.btn_my_favorite)
     void onBtnFavoriteClick() {
         if (mCurrentMovie != null) {
-            if (!isInFavorite){
+            if (!isInFavorite) {
                 MovieEntity favorite = new MovieEntity();
                 favorite.setId(mCurrentMovie.getId());
                 favorite.setTitle(mCurrentMovie.getTitle());
@@ -220,13 +220,13 @@ public class MovieDetailFragment extends BaseFragment {
                 favorite.setVote_average(mCurrentMovie.getVote_average());
                 favorite.setPoster_path(mCurrentMovie.getPoster_path());
                 favorite.setOverview(mCurrentMovie.getOverview());
-                GreenDaoHelper.getInstance(getActivity().getApplicationContext())
+                GreenDaoHelper.getInstance(mContext.getApplicationContext())
                         .getMovieEntityDao()
                         .insertOrReplace(favorite);
 
                 showFavorite(isInFavorite = true);
             } else {
-                GreenDaoHelper.getInstance(getActivity()).getMovieEntityDao().deleteByKey(mCurrentMovie.getId());
+                GreenDaoHelper.getInstance(mContext).getMovieEntityDao().deleteByKey(mCurrentMovie.getId());
                 showFavorite(isInFavorite = false);
             }
         }

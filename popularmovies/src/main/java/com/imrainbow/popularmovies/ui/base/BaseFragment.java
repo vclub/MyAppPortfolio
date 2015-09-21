@@ -23,4 +23,10 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected abstract int getLayoutRes();
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }
