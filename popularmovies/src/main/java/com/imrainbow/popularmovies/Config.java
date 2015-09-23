@@ -5,7 +5,7 @@ package com.imrainbow.popularmovies;
  */
 public class Config {
 
-    public static String THE_MOVIE_DB_API_KEY = "4ebd4218ff55a7efbeeb1ee52bd59a3e";
+    public static String THE_MOVIE_DB_API_KEY = "Please replace this value to your api key";
     public static String THE_MOVIE_DB_BASE_URL = "http://api.themoviedb.org/3";
 
     public static final String SORT_VALUE_KEY = "sort_key";
