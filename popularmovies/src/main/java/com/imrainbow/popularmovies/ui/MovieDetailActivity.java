@@ -1,7 +1,6 @@
 package com.imrainbow.popularmovies.ui;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
@@ -16,7 +15,7 @@ import com.imrainbow.popularmovies.ui.fragment.MovieDetailFragment;
 /**
  * Created by Bin Li on 2015/8/9.
  */
-public class MovieDetailActivity extends BackBaseActivity {
+public class MovieDetailActivity extends BackBaseActivity implements MovieDetailFragment.MovieUrlCallback{
 
 
     private MovieEntity mCurrentMovie;
@@ -31,31 +30,32 @@ public class MovieDetailActivity extends BackBaseActivity {
             mCurrentMovie = getIntent().getParcelableExtra("movie");
 
             getSupportFragmentManager().beginTransaction().replace(R.id.container,
-                    MovieDetailFragment.newInstance(mCurrentMovie)).commit();
+                    MovieDetailFragment.newInstance(mCurrentMovie, this)).commit();
         }
 
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.setData(Uri.parse("http://youtu.be/v/dddd"));
-        setShareIntent(intent);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_movie_detail, menu);
 
         MenuItem item = menu.findItem(R.id.menu_item_share);
 
+        mShareActionProvider = new ShareActionProvider(this);
+        MenuItemCompat.setActionProvider(item, mShareActionProvider);
 
-        mShareActionProvider = (ShareActionProvider)MenuItemCompat.getActionProvider(item);
-
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
-    private void setShareIntent(Intent shareIntent){
+    @Override
+    public void updateMovieTrailerUrl(String videoUrl) {
         if (mShareActionProvider != null){
-            mShareActionProvider.setShareIntent(shareIntent);
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, videoUrl);
+            mShareActionProvider.setShareIntent(intent);
         }
     }
 }

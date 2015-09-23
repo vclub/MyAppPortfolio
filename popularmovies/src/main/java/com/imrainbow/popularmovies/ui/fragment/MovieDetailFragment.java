@@ -60,12 +60,23 @@ public class MovieDetailFragment extends BaseFragment {
     private MovieEntity mCurrentMovie;
     private Context mContext;
 
-    public static MovieDetailFragment newInstance(MovieEntity movie) {
+    public static MovieDetailFragment newInstance(MovieEntity movie, MovieUrlCallback callback) {
         Bundle args = new Bundle();
         args.putParcelable("movie", movie);
         MovieDetailFragment fragment = new MovieDetailFragment();
         fragment.setArguments(args);
+        fragment.setMovieUrlCallback(callback);
         return fragment;
+    }
+
+    public interface MovieUrlCallback {
+        void updateMovieTrailerUrl(String videoUrl);
+    }
+
+    private MovieUrlCallback mMovieUrlCallback;
+
+    public void setMovieUrlCallback(MovieUrlCallback mMovieUrlCallback) {
+        this.mMovieUrlCallback = mMovieUrlCallback;
     }
 
     @Override
@@ -139,6 +150,11 @@ public class MovieDetailFragment extends BaseFragment {
                     public void success(VideosResonse videosResonse, Response response) {
 
                         if (videosResonse.getResults().size() > 0) {
+
+                            if (mMovieUrlCallback != null) {
+                                mMovieUrlCallback.updateMovieTrailerUrl("https://youtu.be/"
+                                        + videosResonse.getResults().get(0).getKey());
+                            }
 
                             for (VideoEntity video : videosResonse.getResults()) {
                                 TextView trailer = new TextView(mContext);
