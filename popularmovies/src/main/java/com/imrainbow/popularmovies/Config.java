@@ -13,4 +13,5 @@ public class Config {
 
     public static String SORT_BY_MOST_POPULAR = "popularity.desc";
     public static String SORT_BY_HIGHEST_RATED = "vote_average.desc";
+    public static String MY_FAVORITE = "my_favorite";
 }

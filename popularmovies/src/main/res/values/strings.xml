@@ -6,6 +6,8 @@
     <string name="action_my_favorite">my favorite</string>
 
     <string name="action_movie_detail_share">share</string>
+    <string name="no_network_info">No network, please check your connection.</string>
+
 
     <string name="movie_detail">MovieDetail</string>
     <string name="movie_title">Movie Title</string>

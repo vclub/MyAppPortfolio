@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.imrainbow.popularmovies.Config;
 import com.imrainbow.popularmovies.R;
@@ -22,6 +23,7 @@ import com.imrainbow.popularmovies.network.TheMovieDBApi;
 import com.imrainbow.popularmovies.ui.adapter.MainPosterAdapter;
 import com.imrainbow.popularmovies.ui.base.BaseActivity;
 import com.imrainbow.popularmovies.ui.fragment.MovieDetailFragment;
+import com.imrainbow.popularmovies.util.NetworkUtils;
 import com.imrainbow.popularmovies.util.SharedPreferenceHelper;
 
 import butterknife.Bind;
@@ -90,31 +92,35 @@ public class MainActivity extends BaseActivity implements MainPosterAdapter.OnIt
 
     private void loadMoiveData() {
 
-        pbLoading.setVisibility(View.VISIBLE);
-        TheMovieDBApi.getInstance()
-                .getTheMovieDBService()
-                .getMoviesSortBy(spfHelper.getValue(Config.SORT_VALUE_KEY),
-                        Config.THE_MOVIE_DB_API_KEY,
-                        new Callback<MovieInfo>() {
-                            @Override
-                            public void success(MovieInfo movieInfo, Response response) {
-                                pbLoading.setVisibility(View.GONE);
-                                if (movieInfo.getResults().size() > 0) {
-                                    currentMovieInfo = movieInfo;
-                                    mAdapter.setItems(movieInfo.getResults());
+        if (NetworkUtils.isNetworkAvailable(this)) {
+            pbLoading.setVisibility(View.VISIBLE);
+            TheMovieDBApi.getInstance()
+                    .getTheMovieDBService()
+                    .getMoviesSortBy(spfHelper.getValue(Config.SORT_VALUE_KEY),
+                            Config.THE_MOVIE_DB_API_KEY,
+                            new Callback<MovieInfo>() {
+                                @Override
+                                public void success(MovieInfo movieInfo, Response response) {
+                                    pbLoading.setVisibility(View.GONE);
+                                    if (movieInfo.getResults().size() > 0) {
+                                        currentMovieInfo = movieInfo;
+                                        mAdapter.setItems(movieInfo.getResults());
 
-                                    if (flMovieDetail != null) {
-                                        detailFragment.showMovie(movieInfo.getResults().get(0));
+                                        if (flMovieDetail != null) {
+                                            detailFragment.showMovie(movieInfo.getResults().get(0));
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void failure(RetrofitError error) {
-                                pbLoading.setVisibility(View.GONE);
-                                Log.e("test", "error", error);
-                            }
-                        });
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    pbLoading.setVisibility(View.GONE);
+                                    Log.e("test", "error", error);
+                                }
+                            });
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.no_network_info), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -133,18 +139,25 @@ public class MainActivity extends BaseActivity implements MainPosterAdapter.OnIt
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_highest_rated) {
-            spfHelper.setValue(Config.SORT_VALUE_KEY, Config.SORT_BY_HIGHEST_RATED);
-            loadMoiveData();
-            return true;
+            if (!spfHelper.getValue(Config.SORT_VALUE_KEY).equals(Config.SORT_BY_HIGHEST_RATED)) {
+                spfHelper.setValue(Config.SORT_VALUE_KEY, Config.SORT_BY_HIGHEST_RATED);
+                loadMoiveData();
+                return true;
+            }
         }
         if (id == R.id.action_most_popular) {
-            spfHelper.setValue(Config.SORT_VALUE_KEY, Config.SORT_BY_MOST_POPULAR);
-            loadMoiveData();
-            return true;
+            if (!spfHelper.getValue(Config.SORT_VALUE_KEY).equals(Config.SORT_BY_MOST_POPULAR)) {
+                spfHelper.setValue(Config.SORT_VALUE_KEY, Config.SORT_BY_MOST_POPULAR);
+                loadMoiveData();
+                return true;
+            }
         }
         if (id == R.id.action_my_favorite) {
-            loadMyFavorite();
-            return true;
+            if (!spfHelper.getValue(Config.SORT_VALUE_KEY).equals(Config.MY_FAVORITE)) {
+                spfHelper.setValue(Config.SORT_VALUE_KEY, Config.MY_FAVORITE);
+                loadMyFavorite();
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);
